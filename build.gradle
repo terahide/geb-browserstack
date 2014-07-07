@@ -39,7 +39,7 @@ test {
 
 subprojects {
     browserStack {
-//        application "https://***.net"
+       application "http://google.com"
         task {
             testClassesDir = rootProject.test.testClassesDir
             testSrcDirs = rootProject.test.testSrcDirs
