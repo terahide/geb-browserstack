@@ -1,31 +1,35 @@
-/*
-	This is the Geb configuration file.
-	
-	See: http://www.gebish.org/manual/current/configuration.html
-*/
-
-
+import geb.driver.BrowserStackDriverFactory
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 
+//baseUrl = "https://***.net"
+
 waiting {
-	timeout = 2
+    timeout = 10
 }
 
+def browserStackBrowser = System.getProperty("geb.browserstack.browser")
+if (browserStackBrowser) {
+    driver = {
+        def username = System.getenv("GEB_BROWSERSTACK_USERNAME")
+        assert username
+        def accessKey = System.getenv("GEB_BROWSERSTACK_AUTHKEY")
+        assert accessKey
+        new BrowserStackDriverFactory().create(browserStackBrowser, username, accessKey)
+    }
+}
+
+
+//Default browser to run on local machine
 environments {
-	
-	// run via “./gradlew chromeTest”
-	// See: http://code.google.com/p/selenium/wiki/ChromeDriver
-	chrome {
-		driver = { new ChromeDriver() }
-	}
-	
-	// run via “./gradlew firefoxTest”
-	// See: http://code.google.com/p/selenium/wiki/FirefoxDriver
-	firefox {
-		driver = { new FirefoxDriver() }
-	}
+
+    firefox {
+        driver = { new FirefoxDriver() }
+    }
+
+    chrome {
+        driver = { new ChromeDriver() }
+    }
 
 }
 
-// To run the tests with all browsers just run “./gradlew test”
