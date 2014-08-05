@@ -1,6 +1,4 @@
 apply plugin: "idea"
-apply plugin: "groovy"
-apply plugin: "geb-browserstack"
 
 buildscript { //2
     repositories {
@@ -11,8 +9,9 @@ buildscript { //2
     }
 }
 
-
-
+allprojects {
+    apply plugin: "groovy"
+}
 
 dependencies {
     def gebVersion = "0.9.3"
@@ -37,7 +36,9 @@ test {
     systemProperty "geb.env", 'firefox' //select an env/browser for local testing
 }
 
-subprojects {
+subprojects { project ->
+    apply plugin: "geb-browserstack"
+
     browserStack {
        application "http://google.com"
         task {
@@ -48,9 +49,10 @@ subprojects {
             systemProperty "geb.build.reportsDir", reporting.file("geb")
         }
         account {
-            username = System.getProperty("USER_ENV_VAR")
-            accessKey = System.getProperty("ACCESS_KEY_ENV_VAR")
+            username = System.getenv("GEB_BROWSERSTACK_USERNAME")
+            accessKey = System.getenv("GEB_BROWSERSTACK_AUTHKEY")
         }
+        tunnelJar = new File(project.buildDir, "tunnel.jar")
     }
 }
 
@@ -59,6 +61,12 @@ project('firefox') {
         browsers {
             firefox_windows
         }
+        account {
+            localId = 'firefox'
+        }
+        task {
+            systemProperty 'browserstack.localIdentifier', 'firefox'
+        }
     }
 }
 
@@ -66,6 +74,12 @@ project('chrome') {
     browserStack {
         browsers {
             chrome_mac
+        }
+        account {
+            localId = 'chrome'
+        }
+        task {
+            systemProperty 'browserstack.localIdentifier', 'chrome'
         }
     }
 }
