@@ -1,13 +1,4 @@
-This is an example of incorporating Geb into a Gradle build. It shows the use of Spock and JUnit 4 tests.
+Based on the geb-example-gradle here is an example for concurrent testing with Browserstack.
+To run just execute ./gradlew clean allBrowserStackTests --parallel
 
-The build is setup to work with HTMLUnit, FireFox and Chrome. Have a look at the `build.gradle` and the `src/test/resources/GebConfig.groovy` files.
-
-The following commands will launch the tests with the individual browsers:
-
-    ./gradlew htmlunitTest
-    ./gradlew chromeTest
-    ./gradlew firefoxTest
-
-To run with all, you can run:
-
-    ./gradlew test
+It will parallel run all tests in selected browsers. 
