@@ -32,7 +32,7 @@ repositories {
 
 //don't disable test task on the root, you'll use it to run the tests locally
 test {
-    systemProperty "geb.build.reportsDir", reporting.file("geb")
+    systemProperty "geb.build.reportsDir", reporting.file("$project.buildDir/test-results/$name/geb")
     systemProperty "geb.env", 'firefox' //select an env/browser for local testing
 }
 
@@ -46,7 +46,7 @@ subprojects { project ->
             testSrcDirs = rootProject.test.testSrcDirs
             classpath = rootProject.test.classpath
 
-            systemProperty "geb.build.reportsDir", reporting.file("geb")
+            systemProperty "geb.build.reportsDir", reporting.file("$project.buildDir/test-results/$name/geb")
         }
         account {
             username = System.getenv("GEB_BROWSERSTACK_USERNAME")
