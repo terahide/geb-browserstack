@@ -1,6 +1,9 @@
 import geb.driver.BrowserStackDriverFactory
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
+import geb.report.ReportState
+import geb.report.Reporter
+import geb.report.ReportingListener
 
 //baseUrl = "https://***.net"
 
